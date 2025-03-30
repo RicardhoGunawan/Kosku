@@ -15,8 +15,8 @@ class Home extends Component
 
     public function mount()
     {
-        $this->featuredRooms = Room::where('is_available', true)
-            ->orderBy('order')
+        // Ubah query untuk menampilkan semua kamar, tidak hanya yang is_available = true
+        $this->featuredRooms = Room::orderBy('order')
             ->limit(4)
             ->get();
 

@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="mt-8">
-                        <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-lg transition duration-300">
+                        <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-black font-bold py-3 px-4 rounded-lg transition duration-300">
                             Kirim Bukti Pembayaran
                         </button>
                     </div>
