@@ -7,6 +7,9 @@ use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
+
 use Outerweb\FilamentSettings\Filament\Pages\Settings as BaseSettings;
 
 class SiteSettings extends BaseSettings
@@ -62,6 +65,40 @@ class SiteSettings extends BaseSettings
                             TextInput::make('social.twitter')
                                 ->label('Twitter')
                                 ->prefix('https://twitter.com/'),
+                        ]),
+                    Tabs\Tab::make('Keunggulan')
+                        ->schema([
+                            Section::make('Pengaturan Bagian')
+                                ->schema([
+                                    TextInput::make('features.tag')
+                                        ->label('Label Tag')
+                                        ->default('KENAPA MEMILIH KAMI'),
+                                    TextInput::make('features.title')
+                                        ->label('Judul Bagian')
+                                        ->default('Keunggulan Kosku'),
+                                    Textarea::make('features.subtitle')
+                                        ->label('Subjudul')
+                                        ->default('Kami menyediakan tempat kos terbaik dengan berbagai keunggulan untuk kenyamanan Anda')
+                                        ->rows(2),
+                                ]),
+
+                            Repeater::make('features.items')
+                                ->label('Daftar Keunggulan')
+                                ->schema([
+                                    TextInput::make('icon')
+                                        ->label('Ikon (kelas Font Awesome)')
+                                        ->required()
+                                        ->placeholder('fas fa-shield-alt'),
+                                    TextInput::make('title')
+                                        ->label('Judul')
+                                        ->required(),
+                                    Textarea::make('description')
+                                        ->label('Deskripsi')
+                                        ->rows(3),
+                                ])
+                                ->defaultItems(4)
+                                ->maxItems(4)
+                                ->columns(1),
                         ]),
                 ])
                 ->columnSpanFull()

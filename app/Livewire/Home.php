@@ -15,8 +15,18 @@ class Home extends Component
 
     public function mount()
     {
-        // Ubah query untuk menampilkan semua kamar, tidak hanya yang is_available = true
+        // Modifikasi query untuk menghitung ketersediaan berdasarkan quantity
         $this->featuredRooms = Room::orderBy('order')
+            ->select('*')
+            ->selectRaw('CASE 
+                WHEN quantity < 1 THEN false 
+                ELSE is_available 
+            END as is_actually_available')
+            ->selectRaw('CASE 
+                WHEN quantity < 1 THEN 0
+                WHEN is_available = true THEN quantity 
+                ELSE 0 
+            END as available_rooms')
             ->limit(4)
             ->get();
 

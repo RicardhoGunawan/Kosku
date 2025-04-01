@@ -20,6 +20,8 @@ class Room extends Model
         'price_yearly',
         'size',
         'capacity',
+        'quantity', // Tambahkan ini
+        'initial_quantity', // tambahkan ini
         'description',
         'is_available',
         'order'
@@ -28,6 +30,12 @@ class Room extends Model
     protected $casts = [
         'is_available' => 'boolean',
     ];
+    // Mutator untuk memastikan is_available = false jika quantity < 1
+    public function setQuantityAttribute($value)
+    {
+        $this->attributes['quantity'] = $value;
+        $this->attributes['is_available'] = $value > 0;
+    }
 
     public function images(): HasMany
     {
