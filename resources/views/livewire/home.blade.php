@@ -1,44 +1,196 @@
 <!-- resources/views/livewire/home.blade.php -->
 <div>
     <!-- Hero Section -->
-    <section class="relative bg-cover bg-center min-h-[80vh] flex items-center"
-        style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/hero-bg.jpg') }}')">
-        <div class="container mx-auto px-4 text-center text-white">
-            <div class="max-w-3xl mx-auto animate__animated animate__fadeIn">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Tempat Tinggal Nyaman dengan
-                    Harga Terjangkau</h1>
-                <p class="text-lg md:text-xl mb-8 opacity-90">Temukan kamar kos yang sesuai dengan kebutuhan dan budget
-                    Anda</p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#rooms"
-                        class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                        <i class="fas fa-search mr-2"></i> Lihat Kamar
-                    </a>
-                    <a href="{{ route('contact') }}"
-                        class="bg-transparent hover:bg-white/10 text-white border-2 border-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:-translate-y-1">
-                        <i class="fas fa-phone-alt mr-2"></i> Hubungi Kami
-                    </a>
+    <section
+        class="relative bg-gradient-to-br from-white to-green-50 min-h-[90vh] py-12 flex items-center overflow-hidden">
+        <!-- Natural Grain Overlay with improved texture -->
+        <div class="absolute inset-0 opacity-15"
+            style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjg1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC40Ii8+PC9zdmc+');">
+        </div>
+
+        <div class="container mx-auto px-6 py-8 md:py-16 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <!-- Left Content with optimized spacing -->
+                <div class="w-full md:w-1/2 pr-0 md:pr-10 ml-0 md:ml-8 lg:ml-12 animate-fade-up delay-100">
+                    <!-- Floating Badge with improved design -->
+                    <div
+                        class="inline-flex items-center bg-green-50 rounded-full px-4 py-2 mb-5 border border-green-100 shadow-sm transform hover:scale-105 transition duration-300">
+                        <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                        <span class="text-green-800 text-sm font-semibold tracking-wide">Tempat Kos Terpercaya</span>
+                    </div>
+
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 leading-tight text-gray-800">
+                        Tempat Tinggal Nyaman dengan
+                        <span class="relative inline-block">
+                            <span class="relative z-10 text-green-600 italic">Harga Terjangkau</span>
+                            <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 100 20"
+                                preserveAspectRatio="none">
+                                <path fill="rgba(34, 197, 94, 0.25)" d="M0 15 Q 25 5, 50 15 T 100 15 L 100 20 L 0 20 Z">
+                                </path>
+                            </svg>
+                        </span>
+                    </h1>
+
+                    <p class="text-base md:text-lg mb-6 text-gray-600 leading-relaxed max-w-xl">
+                        Temukan kamar kos yang sesuai dengan kebutuhan dan budget Anda. Dengan fasilitas lengkap dan
+                        lokasi strategis.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                        <a href="#rooms"
+                            class="group bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl flex items-center justify-center">
+                            <i
+                                class="fas fa-search mr-2 transition-transform group-hover:rotate-12 group-hover:scale-110"></i>
+                            Lihat Kamar
+                        </a>
+                        <a href="{{ route('contact') }}"
+                            class="group bg-white hover:bg-green-50 text-green-600 border-2 border-green-600 font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-md flex items-center justify-center">
+                            <i
+                                class="fas fa-phone-alt mr-2 transition-transform group-hover:rotate-12 group-hover:scale-110"></i>
+                            Hubungi Kami
+                        </a>
+                    </div>
+
+                    <div class="flex gap-8 mt-6">
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-green-600" x-data="{ count: 0 }" x-init="let target = {{ $availableRooms }}; 
+               let interval = setInterval(() => { 
+                   if(count < target) { count++ } else { clearInterval(interval) } 
+               }, 40)">
+                                <span x-text="count"></span>+
+                            </p>
+                            <p class="text-sm text-gray-600 font-medium">Kamar Tersedia</p>
+                        </div>
+
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-green-600" x-data="{ count: 0 }" x-init="let target = {{ $totalTestimonials }}; 
+               let interval = setInterval(() => { 
+                   if(count < target) { count++ } else { clearInterval(interval) } 
+               }, 40)">
+                                <span x-text="count"></span>+
+                            </p>
+                            <p class="text-sm text-gray-600 font-medium">Testimoni</p>
+                        </div>
+
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-green-600" x-data="{ count: 0 }" x-init="let target = {{ $averageRating }}; 
+               let step = target / 50; 
+               let interval = setInterval(() => { 
+                   if(count < target) { count += step } else { clearInterval(interval) } 
+               }, 40)">
+                                <span x-text="count.toFixed(1)"></span>
+                            </p>
+                            <p class="text-sm text-gray-600 font-medium">Rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Image with improved styling and right margin -->
+                <div class="w-full md:w-1/3 mr-0 md:mr-8 lg:mr-12 animate-fade-left delay-200">
+                    <div
+                        class="relative rounded-2xl overflow-hidden shadow-xl transform hover:scale-102 transition-transform duration-500">
+                        <!-- Natural Image Container -->
+                        <div class="relative overflow-hidden group">
+                            <img src="{{ asset('images/hero-bg.png') }}" alt="Kamar Kos Nyaman"
+                                class="w-full h-auto max-h-96 object-cover transform transition-transform duration-700 group-hover:scale-110">
+
+                            <!-- Natural Overlay with improved gradient -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-green-900/40">
+                            </div>
+
+                            <!-- Natural Vignette with improved effect -->
+                            <div class="absolute inset-0 opacity-35"
+                                style="background: radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.35) 100%);">
+                            </div>
+                        </div>
+
+                        <!-- Floating Cards with improved design -->
+                        <div
+                            class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md p-3 rounded-xl shadow-lg transform hover:translate-y-1 transition duration-300">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-green-600 text-white p-2 rounded-lg shadow-md">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-800 text-sm">Pilihan Terbaik</p>
+                                    <p class="text-xs text-gray-600">
+                                        {{ $featuredRooms->sum('available_rooms') }}+ kamar tersedia
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg transform hover:translate-y-1 transition duration-300">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                <p class="text-xs font-semibold text-gray-800">Tersedia Sekarang</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Wave SVG Separator -->
+        <!-- Modern Wave Separator with improved design -->
         <div class="absolute bottom-0 left-0 w-full overflow-hidden">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"
-                class="w-full h-12 md:h-16 lg:h-20">
+                class="relative w-full h-12 md:h-16 lg:h-20">
                 <path
                     d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-                    opacity=".25" class="fill-gray-50"></path>
+                    class="fill-green-100 opacity-85"></path>
                 <path
                     d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
-                    opacity=".5" class="fill-gray-50"></path>
+                    class="fill-green-50 opacity-65"></path>
                 <path
                     d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
-                    class="fill-gray-50"></path>
+                    class="fill-white"></path>
             </svg>
         </div>
     </section>
 
+    <style>
+        @keyframes fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-left {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fade-up 1s ease-out;
+        }
+
+        .animate-fade-left {
+            animation: fade-left 1s ease-out;
+        }
+
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+    </style>
     <!-- Featured Rooms -->
     <section id="rooms" class="py-16 md:py-24 bg-gray-50">
         <div class="container mx-auto px-4 sm:px-6">
@@ -317,7 +469,7 @@
 
     <!-- CTA Section -->
     <section class="py-16 md:py-24 bg-primary bg-opacity-95 bg-cover bg-center relative"
-        style="background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('{{ asset('images/hero-bg.jpg') }}')">
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('{{ asset('images/hero-bg.png') }}')">
         <div class="container mx-auto px-4 text-center relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Siap Menghuni Kosku?</h2>
             <p class="text-xl text-white opacity-90 mb-8 max-w-2xl mx-auto">Jangan lewatkan kesempatan mendapatkan kamar

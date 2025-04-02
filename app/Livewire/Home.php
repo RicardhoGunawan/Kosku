@@ -12,6 +12,9 @@ class Home extends Component
     public $featuredRooms;
     public $featuredGallery;
     public $testimonials;
+    public $availableRooms = 0;
+    public $totalTestimonials = 0;
+    public $averageRating = 0;
 
     public function mount()
     {
@@ -40,6 +43,10 @@ class Home extends Component
             ->orderBy('order')
             ->limit(3)
             ->get();
+        // Ambil nilai akhir
+        $this->availableRooms = $this->featuredRooms->sum('available_rooms');
+        $this->totalTestimonials = $this->testimonials->count();
+        $this->averageRating = number_format($this->testimonials->avg('rating'), 1);
     }
 
     public function render()
