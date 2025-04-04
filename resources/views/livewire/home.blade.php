@@ -2,7 +2,8 @@
 <div>
     <!-- Hero Section -->
     <section
-        class="relative bg-gradient-to-br from-white to-green-50 min-h-[90vh] py-12 flex items-center overflow-hidden">
+        class="bg-gradient-to-br from-emerald-400 to-green-600 min-h-[100vh] py-5 flex items-center overflow-hidden">
+
         <!-- Natural Grain Overlay with improved texture -->
         <div class="absolute inset-0 opacity-15"
             style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjg1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC40Ii8+PC9zdmc+');">
@@ -191,20 +192,36 @@
             animation-delay: 0.2s;
         }
     </style>
+
     <!-- Featured Rooms -->
     <section id="rooms" class="py-16 md:py-24 bg-gray-50">
         <div class="container mx-auto px-4 sm:px-6">
             <!-- Header section tetap sama -->
+            <div class="max-w-2xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Kamar Unggulan Kami
+                </h2>
+                <p class="text-gray-600">
+                    Temukan kamar kos terbaik yang sesuai dengan kebutuhan Anda
+                </p>
+            </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 @forelse($featuredRooms->take(2) as $room)
                     <div
                         class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group border border-gray-100">
-                        <div class="relative overflow-hidden h-64">
+                        <!-- Image Container -->
+                        <div class="relative overflow-hidden aspect-[4/3]">
                             <img src="{{ $room->mainImage() ? asset('storage/' . $room->mainImage()->image_path) : asset('images/default-room.jpg') }}"
                                 alt="{{ $room->name }}"
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 loading="lazy">
+
+                            <!-- Overlay gradient -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            </div>
+
                             <!-- Badge status kamar dengan jumlah -->
                             <div class="absolute top-3 right-3 flex flex-col gap-2">
                                 @if($room->quantity < 1)
@@ -224,7 +241,8 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="p-6">
+
+                        <div class="p-6 md:p-8">
                             <div class="mb-4">
                                 <div class="flex justify-between items-start gap-2">
                                     <h3
@@ -248,40 +266,55 @@
                             <!-- Fasilitas -->
                             <div class="mb-5 py-3 border-t border-b border-gray-100">
                                 <div class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
-                                    @if($room->width && $room->length)
+                                    @if(isset($room->width) && isset($room->length) && $room->width && $room->length)
                                         <span class="flex items-center text-gray-700">
                                             <i class="fas fa-ruler-combined mr-2 text-primary"></i>
                                             {{ $room->width }}x{{ $room->length }} m²
                                         </span>
                                     @endif
 
-                                    @if($room->type)
+                                    @if(isset($room->type) && $room->type)
                                         <span class="flex items-center text-gray-700">
                                             <i class="fas fa-building mr-2 text-primary"></i>
                                             {{ $room->type }}
                                         </span>
                                     @endif
 
-                                    @if($room->bathroom_type)
+                                    @if(isset($room->bathroom_type) && $room->bathroom_type)
                                         <span class="flex items-center text-gray-700">
                                             <i class="fas fa-bath mr-2 text-primary"></i>
                                             {{ $room->bathroom_type }}
                                         </span>
                                     @endif
 
-                                    <!-- Status ketersediaan kamar -->
-                                    <span class="flex items-center text-gray-700">
-                                        <i class="fas fa-door-open mr-2 text-primary"></i>
-                                        @if($room->quantity < 1)
-                                            Tidak ada kamar tersedia
-                                        @else
-                                            {{ $room->quantity }} Total Kamar
-                                        @endif
-                                    </span>
+                                    @if(isset($room->quantity))
+                                        <!-- Status ketersediaan kamar -->
+                                        <span class="flex items-center text-gray-700">
+                                            <i class="fas fa-door-open mr-2 text-primary"></i>
+                                            @if($room->quantity < 1)
+                                                Tidak ada kamar tersedia
+                                            @else
+                                                {{ $room->quantity }} Total Kamar
+                                            @endif
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
+                            <!-- Fasilitas dalam badge jika tidak menggunakan format di atas -->
+                            @if(!isset($room->width) && $room->facilities && $room->facilities->count() > 0)
+                                <div class="flex flex-wrap gap-2 mb-5">
+                                    @foreach($room->facilities->take(4) as $facility)
+                                        <span
+                                            class="bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700">{{ $facility->name }}</span>
+                                    @endforeach
+                                    @if($room->facilities->count() > 3)
+                                        <span
+                                            class="bg-gray-100 rounded-full px-3 py-1 text-xs text-gray-700">+{{ $room->facilities->count() - 3 }}</span>
+                                    @endif
+                                </div>
+                            @endif
 
-                            <!-- Tombol dengan status yang sesuai -->
+                            <!-- Action button -->
                             <a href="{{ route('room-detail', $room->slug) }}"
                                 class="block w-full text-center {{ $room->quantity > 0 && $room->is_actually_available ? 'bg-primary hover:bg-primary-dark' : 'bg-gray-500 hover:bg-gray-600' }} text-black py-3 px-4 rounded-lg transition-all duration-300 hover:shadow-md font-medium flex items-center justify-center gap-2">
                                 <i class="fas fa-eye"></i>
@@ -290,7 +323,13 @@
                         </div>
                     </div>
                 @empty
-                    <!-- Empty state tetap sama -->
+                    <div class="col-span-full text-center py-12">
+                        <div class="max-w-sm mx-auto">
+                            <i class="fas fa-home text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Belum Ada Kamar</h3>
+                            <p class="text-gray-500">Saat ini belum ada kamar yang tersedia.</p>
+                        </div>
+                    </div>
                 @endforelse
             </div>
 
@@ -308,52 +347,66 @@
 
 
 
+
     <!-- Why Choose Us -->
-    <section class="py-16 md:py-24 bg-white">
+    <section class="py-16 md:py-24 bg-green-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <span class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-3">
+                <span
+                    class="inline-block py-2 px-4 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4 tracking-wider uppercase">
                     {{ setting('features.tag', 'KENAPA MEMILIH KAMI') }}
                 </span>
 
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
                     {{ setting('features.title', 'Keunggulan Kosku') }}
                 </h2>
 
-                <p class="text-gray-600 max-w-2xl mx-auto">
+                <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
                     {{ setting('features.subtitle', 'Kami menyediakan tempat kos terbaik dengan berbagai keunggulan untuk kenyamanan Anda') }}
                 </p>
             </div>
 
             @if(setting('features.items'))
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @foreach(setting('features.items') as $feature)
                         <div
-                            class="bg-gray-50 p-6 rounded-xl text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-2">
+                            class="group relative bg-white p-8 rounded-xl text-center shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-3 border border-gray-100">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300">
+                            </div>
+
                             @if($feature['icon'] ?? false)
                                 <div
-                                    class="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center text-6xl mx-auto mb-4">
+                                    class="w-20 h-20 bg-primary/10 text-primary rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6 transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                                     <i class="{{ $feature['icon'] }}"></i>
                                 </div>
                             @endif
 
                             @if($feature['title'] ?? false)
-                                <h3 class="text-xl font-bold mb-3">{{ $feature['title'] }}</h3>
+                                <h3 class="text-xl font-bold mb-4 relative z-10">{{ $feature['title'] }}</h3>
                             @endif
 
                             @if($feature['description'] ?? false)
-                                <p class="text-gray-600">{{ $feature['description'] }}</p>
+                                <p class="text-gray-600 mb-0 relative z-10 leading-relaxed">{{ $feature['description'] }}</p>
                             @endif
                         </div>
                     @endforeach
                 </div>
             @endif
+
         </div>
     </section>
 
-    <!-- Gallery Preview -->
-    <section class="py-16 md:py-24 bg-gray-50">
-        <div class="container mx-auto px-4">
+    <!-- Gallery Preview - Modern & Dynamic Design -->
+    <section class="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <!-- Section header with animated underline -->
             <div class="text-center mb-16">
                 <span
                     class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-3">GALERI
@@ -363,48 +416,106 @@
                     lingkungan kami</p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                @forelse($featuredGallery as $key => $item)
-                    <div class="overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 {{ $key === 0 ? 'col-span-2 row-span-2' : '' }}"
-                        x-data="{ showCaption: false }">
-                        <div class="relative h-full group cursor-pointer" @mouseenter="showCaption = true"
-                            @mouseleave="showCaption = false">
-                            <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->caption ?? 'Galeri' }}"
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-                                x-show="showCaption" x-transition:enter="transition ease-out duration-300"
-                                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-                                @if($item->caption)
-                                    <p class="text-white text-center px-3">{{ $item->caption }}</p>
-                                @endif
-                                <button class="absolute top-3 right-3 bg-white rounded-full p-2 text-primary">
-                                    <i class="fas fa-search"></i>
-                                </button>
+            <!-- Masonry-style gallery with hover effects -->
+            <div x-data="{ activeModal: null }" class="relative">
+                <!-- Gallery grid with masonry-like layout -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6">
+                    @forelse($featuredGallery as $key => $item)
+                        <!-- Featured large image -->
+                        <div
+                            class="{{ $key === 0 ? 'col-span-1 row-span-2 sm:col-span-2 md:row-span-2' : ($key === 3 ? 'md:col-span-2' : '') }} 
+                                              overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-500 ease-in-out hover:-translate-y-1">
+                            <div class="relative h-full group cursor-pointer" @click="activeModal = {{ $key }}"
+                                x-data="{ hovered: false }" @mouseenter="hovered = true" @mouseleave="hovered = false">
+
+                                <!-- Image with scale effect -->
+                                <img src="{{ asset('storage/' . $item->image_path) }}"
+                                    alt="{{ $item->caption ?? 'Galeri Kosku' }}"
+                                    class="w-full h-full object-cover transition-transform duration-700 ease-in-out"
+                                    :class="hovered ? 'scale-110 filter brightness-90' : ''">
+
+                                <!-- Caption overlay with animated entrance -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent 
+                                                      flex flex-col items-center justify-end p-5 opacity-0 group-hover:opacity-100 
+                                                      transition-all duration-500 ease-in-out translate-y-4 group-hover:translate-y-0">
+
+                                    <!-- Magnify button -->
+                                    <button
+                                        class="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full p-3 text-primary 
+                                                             shadow-lg transform group-hover:rotate-12 transition-all duration-500">
+                                        <i class="fas fa-search text-lg"></i>
+                                    </button>
+
+                                    <!-- Caption with fade-in effect -->
+                                    @if($item->caption)
+                                        <p class="text-white text-center font-medium text-lg mb-1">{{ $item->caption }}</p>
+                                    @endif
+                                    <span class="w-12 h-1 bg-primary rounded-full mt-2"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @empty
-                    <div class="col-span-full text-center py-12">
-                        <div class="text-5xl text-gray-300 mb-4">
-                            <i class="fas fa-images"></i>
+                    @empty
+                        <!-- Empty state with animation -->
+                        <div
+                            class="col-span-full text-center py-20 bg-gray-50/50 rounded-2xl border border-dashed border-gray-300">
+                            <div class="text-6xl text-gray-300 mb-5 animate-pulse">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-700">Belum ada galeri tersedia</h3>
+                            <p class="text-gray-500 mt-3 max-w-md mx-auto">Mohon cek kembali nanti untuk update terbaru dari
+                                galeri kami</p>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-700">Belum ada galeri tersedia</h3>
-                        <p class="text-gray-500 mt-2">Mohon cek kembali nanti untuk update terbaru</p>
+                    @endforelse
+                </div>
+
+                <!-- Image modal popups -->
+                @foreach($featuredGallery as $key => $item)
+                    <div x-show="activeModal === {{ $key }}" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 transform scale-90"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="transition ease-in duration-300"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-90"
+                        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
+                        @click.self="activeModal = null">
+                        <div class="relative max-w-4xl w-full bg-white rounded-xl overflow-hidden shadow-2xl">
+                            <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->caption ?? 'Galeri' }}"
+                                class="w-full max-h-[80vh] object-contain">
+
+                            <div class="absolute top-4 right-4">
+                                <button @click="activeModal = null" class="bg-white/90 hover:bg-white text-gray-800 rounded-full p-3 shadow-lg 
+                                                           transform hover:rotate-90 transition-all duration-300">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+
+                            @if($item->caption)
+                                <div class="bg-white p-5">
+                                    <p class="text-lg font-medium text-gray-800">{{ $item->caption }}</p>
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                @endforelse
+                @endforeach
             </div>
 
-            <div class="text-center mt-12">
+            <!-- Call to action button with animation -->
+            <div class="text-center mt-16 mb-16">
                 <a href="{{ route('gallery') }}"
-                    class="inline-block bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg">
-                    <i class="fas fa-images mr-2"></i> Lihat Galeri Lengkap
+                    class="inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-black font-bold py-4 px-8 rounded-xl
+                      transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-primary/20 group">
+                    <i class="fas fa-images mr-2 group-hover:mr-3 transition-all"></i>
+                    <span>Lihat Galeri Lengkap</span>
+                    <i
+                        class="fas fa-arrow-right ml-2 opacity-0 w-0 group-hover:opacity-100 group-hover:w-5 group-hover:ml-3 transition-all duration-300"></i>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="py-16 md:py-24 bg-white">
+    <section class="py-16 md:py-24 bg-green-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <span
@@ -460,10 +571,11 @@
 
             <div class="text-center mt-12">
                 <a href="{{ route('testimonials') }}"
-                    class="inline-block bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg">
+                    class="inline-block bg-dark hover:bg-grey-dark text-dark font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg border-2 border-white">
                     <i class="fas fa-comments mr-2"></i> Baca Lebih Banyak Testimoni
                 </a>
             </div>
+
         </div>
     </section>
 

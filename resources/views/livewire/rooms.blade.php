@@ -71,7 +71,7 @@
 
     <!-- Room Cards Container - Centered with flex-wrap -->
     <div class="flex justify-center">
-        <div class="flex flex-wrap justify-center gap-8 max-w-7xl">
+        <div class="flex flex-wrap justify-center gap-8 max-w-8xl">
             @foreach($rooms as $room)
                 <div wire:key="room-{{ $room->id }}"
                     class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group border border-gray-100 w-full sm:w-80 md:w-72 lg:w-80">

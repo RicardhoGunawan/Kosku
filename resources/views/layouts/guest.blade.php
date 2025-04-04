@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? setting('site.name', 'Kosku - Tempat Kos Nyaman') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @fluxAppearance
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +14,9 @@
         rel="stylesheet">
     <meta name="description"
         content="{{ setting('site.description', 'Tempat kos nyaman dengan fasilitas lengkap dan harga terjangkau') }}">
+    @livewireStyles
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
 </head>
 
 <body class="font-poppins antialiased text-gray-800 flex flex-col min-h-screen bg-gray-50">
@@ -67,7 +71,7 @@
                         <span class="hidden lg:inline">{{ setting('contact.phone', '+62 123 4567 89') }}</span>
                     </a>
                     <a href="{{ route('rooms') }}"
-                        class="bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white px-5 py-2 rounded-full transition-all duration-300 font-medium flex items-center shadow-md hover:shadow-lg">
+                        class="bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-black px-5 py-2 rounded-full transition-all duration-300 font-medium flex items-center shadow-md hover:shadow-lg">
                         <i class="fas fa-calendar-check mr-2"></i>
                         <span class="hidden sm:inline">Booking Sekarang</span>
                     </a>
@@ -109,7 +113,7 @@
                     </a>
                     <div class="pt-2">
                         <a href="{{ route('rooms') }}"
-                            class="block w-full text-center bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white px-4 py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg">
+                            class="block w-full text-center bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-black px-4 py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg">
                             <i class="fas fa-calendar-check mr-2"></i> Booking Sekarang
                         </a>
                     </div>
@@ -122,25 +126,6 @@
     <main class="flex-grow">
         {{ $slot }}
     </main>
-
-    <!-- Newsletter Subscription -->
-    <!-- <section class="bg-gradient-to-r from-primary to-primary-dark py-12 text-white">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto text-center">
-                <h3 class="text-2xl md:text-3xl font-bold mb-4">Dapatkan Penawaran Spesial</h3>
-                <p class="text-white/90 mb-6 text-lg">Berlangganan newsletter kami untuk mendapatkan info promo dan
-                    diskon terbaru langsung ke email Anda.</p>
-                <form class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
-                    <input type="email" placeholder="Alamat email Anda"
-                        class="px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white text-gray-800 w-full">
-                    <button type="submit"
-                        class="bg-white hover:bg-gray-100 text-primary px-6 py-3 rounded-lg transition-all duration-300 font-medium shadow-md whitespace-nowrap">
-                        <i class="fas fa-paper-plane mr-2"></i> Berlangganan
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section> -->
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-300">
@@ -515,6 +500,11 @@
             pointer-events: none;
         }
     </style>
+    @fluxScripts
+    @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+
 </body>
 
 </html>
