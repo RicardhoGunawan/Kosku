@@ -7,20 +7,20 @@ use App\Models\Setting;
 
 class About extends Component
 {
-    public $aboutContent;
-    public $visionMission;
-    public $team;
+    public $title;
+    public $description;
+    public $image;
 
     public function mount()
     {
-        $this->aboutContent = Setting::getValue('about_content');
-        $this->visionMission = Setting::getValue('vision_mission');
-        $this->team = json_decode(Setting::getValue('team_members', '[]'), true);
+        $this->title = Setting::getValue('about.title', 'Tentang Kos Kami');
+        $this->description = Setting::getValue('about.description', '');
+        $this->image = Setting::getValue('about.image');
     }
 
     public function render()
     {
         return view('livewire.about')
-            ->layout('layouts.guest', ['title' => 'Tentang Kami']);
+            ->layout('layouts.guest', ['title' => $this->title]);
     }
 }

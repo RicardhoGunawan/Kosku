@@ -1,8 +1,7 @@
 <!-- resources/views/livewire/home.blade.php -->
 <div>
     <!-- Hero Section -->
-    <section
-        class="bg-gradient-to-br from-emerald-400 to-green-600 min-h-[100vh] py-5 flex items-center overflow-hidden">
+    <section class="bg-green-50 min-h-[100vh] py-5 flex items-center overflow-hidden">
 
         <!-- Natural Grain Overlay with improved texture -->
         <div class="absolute inset-0 opacity-15"
@@ -192,6 +191,8 @@
             animation-delay: 0.2s;
         }
     </style>
+    @livewire('about')
+    
 
     <!-- Featured Rooms -->
     <section id="rooms" class="py-16 md:py-24 bg-gray-50">

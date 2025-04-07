@@ -41,6 +41,29 @@ class SiteSettings extends BaseSettings
                                 ->image()
                                 ->directory('settings/logo'),
                         ]),
+                    Tabs\Tab::make('Tentang Kami')
+                        ->schema([
+                            Section::make('Bagian Tentang Kami')
+                                ->description('Atur bagian Tentang Kami yang akan tampil di halaman utama.')
+                                ->schema([
+                                    Textarea::make('about.description')
+                                        ->label('Deskripsi')
+                                        ->rows(5)
+                                        ->dehydrateStateUsing(fn($state) => trim($state, '"'))
+                                        ->formatStateUsing(fn($state) => trim($state, '"')),
+
+                                    FileUpload::make('about.image')
+                                        ->label('Gambar')
+                                        ->image()
+                                        ->directory('about')
+                                        ->preserveFilenames()
+                                        ->visibility('public')
+                                        ->imagePreviewHeight('150'),
+                                ]),
+                        ]),
+
+
+
 
                     Tabs\Tab::make('Kontak')
                         ->schema([
